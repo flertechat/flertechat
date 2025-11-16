@@ -37,6 +37,7 @@ export default function Dashboard() {
   const [copied, setCopied] = useState<string | null>(null);
   const [tone, setTone] = useState<"natural" | "bold" | "funny">("bold");
   const [showContactModal, setShowContactModal] = useState(false);
+  const [showHistoryModal, setShowHistoryModal] = useState(false);
   const [contactForm, setContactForm] = useState({
     name: "",
     phone: "",
@@ -55,6 +56,10 @@ export default function Dashboard() {
 
   const creditsQuery = trpc.subscription.get.useQuery(undefined, {
     enabled: isAuthenticated,
+  });
+
+  const conversationsQuery = trpc.flerte.listConversations.useQuery(undefined, {
+    enabled: isAuthenticated && showHistoryModal,
   });
 
   const generateMutation = trpc.flerte.generateMessage.useMutation({
@@ -189,7 +194,16 @@ export default function Dashboard() {
             </div>
           </div>
           
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 sm:gap-4">
+            <Button
+              onClick={() => setShowHistoryModal(true)}
+              variant="outline"
+              size="sm"
+              className="gap-2"
+            >
+              <MessageSquare className="w-4 h-4" />
+              <span className="hidden sm:inline">Histórico</span>
+            </Button>
             <Button
               onClick={() => setLocation("/plans")}
               variant="outline"
@@ -206,7 +220,7 @@ export default function Dashboard() {
               className="gap-2"
             >
               <LogOut className="w-4 h-4" />
-              Sair
+              <span className="hidden sm:inline">Sair</span>
             </Button>
           </div>
         </div>
@@ -633,6 +647,68 @@ export default function Dashboard() {
               Enviar Mensagem
             </Button>
           </form>
+        </DialogContent>
+      </Dialog>
+
+      {/* History Modal */}
+      <Dialog open={showHistoryModal} onOpenChange={setShowHistoryModal}>
+        <DialogContent className="sm:max-w-[700px] max-h-[80vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="text-2xl font-bold text-gray-800">
+              Histórico de Conversas
+            </DialogTitle>
+            <DialogDescription className="text-gray-600">
+              Veja todas as suas conversas anteriores
+            </DialogDescription>
+          </DialogHeader>
+          
+          <div className="mt-4 space-y-4">
+            {conversationsQuery.isLoading && (
+              <div className="flex items-center justify-center py-8">
+                <Loader2 className="w-8 h-8 animate-spin text-rose-500" />
+              </div>
+            )}
+            
+            {conversationsQuery.data && conversationsQuery.data.length === 0 && (
+              <div className="text-center py-8 text-gray-500">
+                <MessageSquare className="w-12 h-12 mx-auto mb-3 opacity-50" />
+                <p>Nenhuma conversa ainda</p>
+                <p className="text-sm">Comece gerando sua primeira mensagem!</p>
+              </div>
+            )}
+            
+            {conversationsQuery.data?.map((conversation) => (
+              <div
+                key={conversation.id}
+                className="bg-gradient-to-br from-rose-50 to-pink-50 rounded-2xl p-4 border border-rose-200 hover:shadow-lg transition-all cursor-pointer"
+                onClick={() => {
+                  // Carregar conversa
+                  trpc.flerte.getConversation.useQuery({ id: conversation.id });
+                  setShowHistoryModal(false);
+                }}
+              >
+                <div className="flex items-start justify-between mb-2">
+                  <div className="flex-1">
+                    <p className="text-sm text-gray-500 mb-1">
+                      {new Date(conversation.createdAt).toLocaleDateString('pt-BR', {
+                        day: '2-digit',
+                        month: 'short',
+                        year: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit',
+                      })}
+                    </p>
+                    <p className="text-gray-700 font-medium line-clamp-2">
+                      {conversation.context}
+                    </p>
+                  </div>
+                  <span className="text-xs bg-white px-2 py-1 rounded-full text-gray-600 ml-2">
+                    {conversation.tone === 'bold' ? '😏 Safado' : conversation.tone === 'funny' ? '😄 Engraçado' : '🙂 Normal'}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
         </DialogContent>
       </Dialog>
     </div>

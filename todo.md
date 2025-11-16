@@ -89,3 +89,8 @@
 ## UX Improvements
 - [x] Adicionar smooth scroll fluido em todo o site
 - [x] Implementar animações de entrada (fade-in/slide-up) nas seções
+- [x] Corrigir responsividade mobile da landing page
+- [x] Adicionar footer completo na Home
+- [x] Criar botão flutuante "Voltar ao topo"
+- [x] Adicionar aba de histórico de chats no Dashboard
+- [ ] Fazer push final para GitHub
