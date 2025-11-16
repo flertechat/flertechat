@@ -31,23 +31,23 @@ export default function Home() {
       {/* Header */}
       <header className="bg-black/30 backdrop-blur-md border-b border-white/20 sticky top-0 z-50">
         <div className="container max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <img src={APP_LOGO} alt="Logo" className="w-10 h-10 object-contain animate-pulse" />
-            <span className="font-bold text-2xl text-white drop-shadow-lg app-title">{APP_TITLE}</span>
+          <div className="flex items-center gap-2 sm:gap-3">
+            <img src={APP_LOGO} alt="Logo" className="w-8 sm:w-10 h-8 sm:h-10 object-contain" />
+            <span className="font-black text-xl sm:text-2xl text-white drop-shadow-lg app-title">{APP_TITLE}</span>
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 sm:gap-4">
             <Button
               onClick={() => setLocation("/plans")}
               variant="ghost"
-              className="text-white hover:bg-white/20"
+              className="text-white hover:bg-white/20 text-sm sm:text-base"
             >
               Planos
             </Button>
             <Button
               onClick={handleGetStarted}
-              className="bg-white text-rose-600 hover:bg-gray-100 font-bold"
+              className="bg-white text-rose-600 hover:bg-gray-100 font-bold text-sm sm:text-base px-3 sm:px-4 py-2 sm:py-2 whitespace-nowrap"
             >
-              {isAuthenticated ? "Ir para o App" : "Começar Grátis"}
+              {isAuthenticated ? "App" : "Comear"}
             </Button>
           </div>
         </div>
@@ -369,18 +369,15 @@ export default function Home() {
               Começar Grátis - 10 Mensagens
             </Button>
           </div>
-          <div className="flex items-center justify-center gap-8 text-white text-sm">
-            <div className="flex items-center gap-2">
-              <Check className="w-5 h-5 text-green-300" />
-              <span>Sem cartão de crédito</span>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-8">
+            <div className="bg-black/40 backdrop-blur-md rounded-2xl p-4 border border-white/20">
+              <p className="text-white font-black text-center text-lg">Sem cartão de crédito</p>
             </div>
-            <div className="flex items-center gap-2">
-              <Check className="w-5 h-5 text-green-300" />
-              <span>10 mensagens grátis</span>
+            <div className="bg-black/40 backdrop-blur-md rounded-2xl p-4 border border-white/20">
+              <p className="text-white font-black text-center text-lg">10 mensagens grátis</p>
             </div>
-            <div className="flex items-center gap-2">
-              <Check className="w-5 h-5 text-green-300" />
-              <span>Cancele quando quiser</span>
+            <div className="bg-black/40 backdrop-blur-md rounded-2xl p-4 border border-white/20">
+              <p className="text-white font-black text-center text-lg">Cancele quando quiser</p>
             </div>
           </div>
         </div>
@@ -398,12 +395,7 @@ export default function Home() {
               </div>
               <p className="text-white/80 text-lg mb-4">"Sua arma secreta para quebrar o gelo"</p>
               <div className="flex gap-4">
-                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-white transition-colors">
-                  <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073z"/><path d="M12 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-                </a>
-                <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-white transition-colors">
-                  <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/></svg>
-                </a>
+                {/* Redes sociais removidas */}
               </div>
             </div>
 

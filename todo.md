@@ -93,4 +93,11 @@
 - [x] Adicionar footer completo na Home
 - [x] Criar botão flutuante "Voltar ao topo"
 - [x] Adicionar aba de histórico de chats no Dashboard
-- [ ] Fazer push final para GitHub
+- [x] Fazer push final para GitHub
+
+## Correcoes Finais
+- [x] Reformular CTA final com caixas escuras e texto branco
+- [x] Remover Instagram e Twitter do footer
+- [x] Corrigir botao "Ir para App" que esta sendo cortado no mobile
+- [x] Atualizar logo e favicon com novo design
+- [x] Melhorar tipografia do nome FlerteChat
