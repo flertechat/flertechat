@@ -64,3 +64,12 @@
 - [x] Melhorar layout responsivo para mobile
 - [x] Adicionar animações suaves nas interações
 - [x] Preservar contexto das mensagens anteriores na geração
+
+## Footer e Páginas Legais
+- [x] Adicionar footer completo no Dashboard
+- [x] Criar modal de contato com formulário
+- [x] Criar página de Política de Privacidade
+- [x] Criar página de Termos e Condições
+- [x] Criar página de FAQ (Perguntas Frequentes)
+- [x] Adicionar link para rolar até avaliações
+- [x] Implementar envio de email de contato

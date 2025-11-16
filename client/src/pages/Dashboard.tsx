@@ -1,6 +1,8 @@
 import { useAuth } from "@/_core/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import { Input } from "@/components/ui/input";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { APP_LOGO, APP_TITLE, getLoginUrl } from "@/const";
 import { trpc } from "@/lib/trpc";
 import {
@@ -11,6 +13,11 @@ import {
   Sparkles,
   Send,
   CreditCard,
+  Mail,
+  Phone,
+  User,
+  MessageSquare,
+  Star,
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useLocation } from "wouter";
@@ -29,8 +36,16 @@ export default function Dashboard() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [copied, setCopied] = useState<string | null>(null);
   const [tone, setTone] = useState<"natural" | "bold" | "funny">("bold");
+  const [showContactModal, setShowContactModal] = useState(false);
+  const [contactForm, setContactForm] = useState({
+    name: "",
+    phone: "",
+    email: "",
+    message: "",
+  });
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const reviewsRef = useRef<HTMLDivElement>(null);
 
   const toneOptions = [
     { id: "bold", label: "Safado", icon: "😏", color: "from-rose-500 to-pink-600" },
@@ -134,6 +149,26 @@ export default function Dashboard() {
     });
   };
 
+  const scrollToReviews = () => {
+    reviewsRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const handleContactSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    // Create mailto link
+    const subject = encodeURIComponent(`Contato de ${contactForm.name}`);
+    const body = encodeURIComponent(
+      `Nome: ${contactForm.name}\nTelefone: ${contactForm.phone}\nEmail: ${contactForm.email}\n\nMensagem:\n${contactForm.message}`
+    );
+    
+    window.location.href = `mailto:pauloromulo2000k@gmail.com?subject=${subject}&body=${body}`;
+    
+    toast.success("Abrindo seu cliente de email...");
+    setShowContactModal(false);
+    setContactForm({ name: "", phone: "", email: "", message: "" });
+  };
+
   const credits = creditsQuery.data?.creditsRemaining ?? 0;
   const plan = creditsQuery.data?.plan || "free";
 
@@ -148,7 +183,10 @@ export default function Dashboard() {
         <div className="container max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <span className="text-3xl">{APP_LOGO}</span>
-            <span className="font-bold text-xl text-gray-800">{APP_TITLE}</span>
+            <div>
+              <span className="font-bold text-xl text-gray-800 block">{APP_TITLE}</span>
+              <span className="text-xs text-gray-500 italic">"Sua arma secreta para quebrar o gelo"</span>
+            </div>
           </div>
           
           <div className="flex items-center gap-4">
@@ -347,6 +385,256 @@ export default function Dashboard() {
           </div>
         </div>
       </main>
+
+      {/* Reviews Section */}
+      <div ref={reviewsRef} className="bg-gradient-to-r from-rose-100 to-orange-100 py-16">
+        <div className="container max-w-6xl mx-auto px-4">
+          <h2 className="text-4xl font-black text-center text-gray-800 mb-12">
+            O Que Nossos Usuários Dizem
+          </h2>
+          <div className="grid md:grid-cols-3 gap-8">
+            <div className="bg-white rounded-2xl p-6 shadow-lg">
+              <div className="flex gap-1 mb-4">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />
+                ))}
+              </div>
+              <p className="text-gray-700 mb-4">
+                "Cara, esse app salvou minha vida! Tava travado numa conversa e o Flerte Chat me deu UMA resposta que fez ela rir demais. Agora a gente tá saindo!"
+              </p>
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold">
+                  R
+                </div>
+                <div>
+                  <p className="font-bold text-gray-800">Rafael, 25</p>
+                  <p className="text-sm text-gray-500">São Paulo, SP</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-white rounded-2xl p-6 shadow-lg">
+              <div className="flex gap-1 mb-4">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />
+                ))}
+              </div>
+              <p className="text-gray-700 mb-4">
+                "Melhor investimento que fiz! As respostas são naturais que ninguém percebe que foi IA. Já consegui sair com 3 pessoas esse mês 😍"
+              </p>
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-purple-500 flex items-center justify-center text-white font-bold">
+                  M
+                </div>
+                <div>
+                  <p className="font-bold text-gray-800">Marcia, 28</p>
+                  <p className="text-sm text-gray-500">Rio de Janeiro, RJ</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-white rounded-2xl p-6 shadow-lg">
+              <div className="flex gap-1 mb-4">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />
+                ))}
+              </div>
+              <p className="text-gray-700 mb-4">
+                "Eu sou péssima pra flertar por texto, mas com o Flerte Chat eu pareço profissional! Recomendo demais ❤️"
+              </p>
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-pink-500 flex items-center justify-center text-white font-bold">
+                  C
+                </div>
+                <div>
+                  <p className="font-bold text-gray-800">Carolina, 23</p>
+                  <p className="text-sm text-gray-500">Belo Horizonte, MG</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Footer */}
+      <footer className="bg-gradient-to-br from-gray-900 to-gray-800 text-white py-12">
+        <div className="container max-w-6xl mx-auto px-4">
+          <div className="grid md:grid-cols-4 gap-8 mb-8">
+            {/* Company Info */}
+            <div>
+              <div className="flex items-center gap-2 mb-4">
+                <span className="text-3xl">{APP_LOGO}</span>
+                <span className="font-bold text-xl">{APP_TITLE}</span>
+              </div>
+              <p className="text-gray-400 text-sm italic mb-4">
+                "Sua arma secreta para quebrar o gelo"
+              </p>
+              <p className="text-gray-400 text-sm">
+                © 2025 FlerteChat. Todos os direitos reservados.
+              </p>
+            </div>
+
+            {/* Support */}
+            <div>
+              <h3 className="font-bold text-lg mb-4">Suporte</h3>
+              <ul className="space-y-2 text-gray-400">
+                <li>
+                  <a
+                    href="mailto:pauloromulo2000k@gmail.com"
+                    className="hover:text-white transition-colors flex items-center gap-2"
+                  >
+                    <Mail className="w-4 h-4" />
+                    Email de Suporte
+                  </a>
+                </li>
+                <li>
+                  <button
+                    onClick={scrollToReviews}
+                    className="hover:text-white transition-colors flex items-center gap-2"
+                  >
+                    <Star className="w-4 h-4" />
+                    Avaliações
+                  </button>
+                </li>
+                <li>
+                  <button
+                    onClick={() => setShowContactModal(true)}
+                    className="hover:text-white transition-colors flex items-center gap-2"
+                  >
+                    <MessageSquare className="w-4 h-4" />
+                    Contate-nos
+                  </button>
+                </li>
+              </ul>
+            </div>
+
+            {/* Legal */}
+            <div>
+              <h3 className="font-bold text-lg mb-4">Legal</h3>
+              <ul className="space-y-2 text-gray-400">
+                <li>
+                  <button
+                    onClick={() => setLocation("/privacy")}
+                    className="hover:text-white transition-colors"
+                  >
+                    Política de Privacidade
+                  </button>
+                </li>
+                <li>
+                  <button
+                    onClick={() => setLocation("/terms")}
+                    className="hover:text-white transition-colors"
+                  >
+                    Termos e Condições
+                  </button>
+                </li>
+                <li>
+                  <button
+                    onClick={() => setLocation("/faq")}
+                    className="hover:text-white transition-colors"
+                  >
+                    Perguntas Frequentes
+                  </button>
+                </li>
+              </ul>
+            </div>
+
+            {/* Company */}
+            <div>
+              <h3 className="font-bold text-lg mb-4">Empresa</h3>
+              <p className="text-gray-400 text-sm mb-2">FlerteChat</p>
+              <p className="text-gray-400 text-sm">
+                Transformando conversas em conexões reais desde 2025.
+              </p>
+            </div>
+          </div>
+        </div>
+      </footer>
+
+      {/* Contact Modal */}
+      <Dialog open={showContactModal} onOpenChange={setShowContactModal}>
+        <DialogContent className="sm:max-w-[500px]">
+          <DialogHeader>
+            <DialogTitle className="text-2xl font-bold text-gray-800">
+              Entre em Contato
+            </DialogTitle>
+            <DialogDescription className="text-gray-600">
+              Preencha o formulário abaixo e entraremos em contato em breve!
+            </DialogDescription>
+          </DialogHeader>
+          <form onSubmit={handleContactSubmit} className="space-y-4 mt-4">
+            <div>
+              <label className="text-sm font-semibold text-gray-700 mb-2 block">
+                Nome completo
+              </label>
+              <div className="relative">
+                <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                <Input
+                  required
+                  value={contactForm.name}
+                  onChange={(e) => setContactForm({ ...contactForm, name: e.target.value })}
+                  placeholder="Seu nome"
+                  className="pl-10"
+                />
+              </div>
+            </div>
+            
+            <div>
+              <label className="text-sm font-semibold text-gray-700 mb-2 block">
+                Telefone
+              </label>
+              <div className="relative">
+                <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                <Input
+                  required
+                  value={contactForm.phone}
+                  onChange={(e) => setContactForm({ ...contactForm, phone: e.target.value })}
+                  placeholder="(00) 00000-0000"
+                  className="pl-10"
+                />
+              </div>
+            </div>
+            
+            <div>
+              <label className="text-sm font-semibold text-gray-700 mb-2 block">
+                Email
+              </label>
+              <div className="relative">
+                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                <Input
+                  required
+                  type="email"
+                  value={contactForm.email}
+                  onChange={(e) => setContactForm({ ...contactForm, email: e.target.value })}
+                  placeholder="seu@email.com"
+                  className="pl-10"
+                />
+              </div>
+            </div>
+            
+            <div>
+              <label className="text-sm font-semibold text-gray-700 mb-2 block">
+                Mensagem
+              </label>
+              <Textarea
+                required
+                value={contactForm.message}
+                onChange={(e) => setContactForm({ ...contactForm, message: e.target.value })}
+                placeholder="Como podemos ajudar?"
+                className="min-h-[120px]"
+              />
+            </div>
+            
+            <Button
+              type="submit"
+              className="w-full bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 text-white font-bold py-6"
+            >
+              <Send className="w-5 h-5 mr-2" />
+              Enviar Mensagem
+            </Button>
+          </form>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
