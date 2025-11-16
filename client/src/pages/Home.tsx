@@ -65,7 +65,7 @@ export default function Home() {
               Nunca Mais Fique Sem Resposta
             </h1>
             <p className="text-lg sm:text-xl lg:text-2xl mb-8 opacity-95">
-              IA que gera respostas <span className="font-bold underline">irresistíveis</span> para suas conversas de flerte. 
+              IA que gera respostas <span className="font-bold underline">irresistíveis 😈🔥</span> para suas conversas de flerte. 
               Escolha o tom e impressione!
             </p>
             <div className="flex flex-col sm:flex-row gap-4 mb-8">
@@ -75,7 +75,7 @@ export default function Home() {
                 className="bg-white text-rose-600 hover:bg-gray-100 text-base sm:text-lg lg:text-xl px-8 sm:px-12 py-6 sm:py-7 font-bold shadow-2xl w-full sm:w-auto"
               >
                 <Sparkles className="w-6 h-6 mr-2" />
-                Começar Grátis - 10 Mensagens
+                Começar Grátis
               </Button>
               <Button
                 onClick={() => setLocation("/plans")}
@@ -366,7 +366,7 @@ export default function Home() {
               className="bg-white text-rose-600 hover:bg-gray-100 text-2xl px-16 py-8 font-black shadow-2xl"
             >
               <Sparkles className="w-7 h-7 mr-3" />
-              Começar Grátis - 10 Mensagens
+              Começar Grátis
             </Button>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-8">
@@ -393,7 +393,7 @@ export default function Home() {
                 <img src={APP_LOGO} alt="Logo" className="w-10 h-10 object-contain" />
                 <span className="font-bold text-2xl text-white app-title">{APP_TITLE}</span>
               </div>
-              <p className="text-white/80 text-lg mb-4">"Sua arma secreta para quebrar o gelo"</p>
+              <p className="text-white/80 text-lg mb-4" style={{fontWeight: '800'}}>"Sua arma secreta para quebrar o gelo"</p>
               <div className="flex gap-4">
                 {/* Redes sociais removidas */}
               </div>
