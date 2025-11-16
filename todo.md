@@ -43,3 +43,11 @@
 - [x] Testar bloqueio quando créditos acabam
 - [x] Testar fluxo de upgrade de plano
 - [x] Testar atualização de créditos após pagamento
+
+## Melhorias da Landing Page
+- [x] Adicionar chat demonstrativo no topo com exemplo safado
+- [x] Buscar e adicionar imagens atraentes de pessoas flertando
+- [x] Criar seção de prova social com depoimentos
+- [x] Melhorar CTAs para serem mais persuasivos
+- [x] Adicionar seção "Como Funciona" com passos visuais
+- [x] Adicionar seção de estatísticas/resultados
