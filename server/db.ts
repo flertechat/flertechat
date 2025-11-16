@@ -1,6 +1,6 @@
-import { eq } from "drizzle-orm";
+import { eq, and, desc } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users } from "../drizzle/schema";
+import { InsertUser, users, subscriptions, conversations, messages, transactions, InsertSubscription, InsertConversation, InsertMessage, InsertTransaction } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
 let _db: ReturnType<typeof drizzle> | null = null;
@@ -89,4 +89,132 @@ export async function getUserByOpenId(openId: string) {
   return result.length > 0 ? result[0] : undefined;
 }
 
-// TODO: add feature queries here as your schema grows.
+// Subscription helpers
+export async function getUserSubscription(userId: number) {
+  const db = await getDb();
+  if (!db) return null;
+
+  const result = await db.select().from(subscriptions).where(eq(subscriptions.userId, userId)).limit(1);
+  return result.length > 0 ? result[0] : null;
+}
+
+export async function createSubscription(data: InsertSubscription) {
+  const db = await getDb();
+  if (!db) return null;
+
+  await db.insert(subscriptions).values(data);
+  return getUserSubscription(data.userId);
+}
+
+export async function updateSubscription(userId: number, data: Partial<InsertSubscription>) {
+  const db = await getDb();
+  if (!db) return null;
+
+  await db.update(subscriptions).set(data).where(eq(subscriptions.userId, userId));
+  return getUserSubscription(userId);
+}
+
+export async function deductCredit(userId: number) {
+  const db = await getDb();
+  if (!db) return false;
+
+  const subscription = await getUserSubscription(userId);
+  if (!subscription || subscription.creditsRemaining <= 0) {
+    return false;
+  }
+
+  await db.update(subscriptions)
+    .set({ creditsRemaining: subscription.creditsRemaining - 1 })
+    .where(eq(subscriptions.userId, userId));
+
+  // Log transaction
+  await db.insert(transactions).values({
+    userId,
+    type: "credit_used",
+    amount: 1,
+    description: "Geração de mensagem",
+  });
+
+  return true;
+}
+
+// Conversation helpers
+export async function getUserConversations(userId: number) {
+  const db = await getDb();
+  if (!db) return [];
+
+  return db.select().from(conversations)
+    .where(eq(conversations.userId, userId))
+    .orderBy(desc(conversations.createdAt));
+}
+
+export async function getConversationWithMessages(conversationId: number, userId: number) {
+  const db = await getDb();
+  if (!db) return null;
+
+  const conversation = await db.select().from(conversations)
+    .where(and(eq(conversations.id, conversationId), eq(conversations.userId, userId)))
+    .limit(1);
+
+  if (conversation.length === 0) return null;
+
+  const conversationMessages = await db.select().from(messages)
+    .where(eq(messages.conversationId, conversationId))
+    .orderBy(messages.createdAt);
+
+  return {
+    ...conversation[0],
+    messages: conversationMessages,
+  };
+}
+
+export async function createConversation(data: InsertConversation) {
+  const db = await getDb();
+  if (!db) return null;
+
+  const result = await db.insert(conversations).values(data);
+  const insertId = result[0].insertId;
+  
+  const created = await db.select().from(conversations).where(eq(conversations.id, Number(insertId))).limit(1);
+  return created.length > 0 ? created[0] : null;
+}
+
+// Message helpers
+export async function addMessage(data: InsertMessage) {
+  const db = await getDb();
+  if (!db) return null;
+
+  const result = await db.insert(messages).values(data);
+  const insertId = result[0].insertId;
+  
+  const created = await db.select().from(messages).where(eq(messages.id, Number(insertId))).limit(1);
+  return created.length > 0 ? created[0] : null;
+}
+
+export async function toggleMessageFavorite(messageId: number, userId: number) {
+  const db = await getDb();
+  if (!db) return null;
+
+  const message = await db.select().from(messages)
+    .where(and(eq(messages.id, messageId), eq(messages.userId, userId)))
+    .limit(1);
+
+  if (message.length === 0) return null;
+
+  const newFavoriteStatus = !message[0].isFavorite;
+  await db.update(messages)
+    .set({ isFavorite: newFavoriteStatus })
+    .where(eq(messages.id, messageId));
+
+  const updated = await db.select().from(messages).where(eq(messages.id, messageId)).limit(1);
+  return updated.length > 0 ? updated[0] : null;
+}
+
+// Transaction helpers
+export async function createTransaction(data: InsertTransaction) {
+  const db = await getDb();
+  if (!db) return null;
+
+  await db.insert(transactions).values(data);
+  return true;
+}
