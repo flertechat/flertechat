@@ -88,3 +88,4 @@
 
 ## UX Improvements
 - [x] Adicionar smooth scroll fluido em todo o site
+- [x] Implementar animações de entrada (fade-in/slide-up) nas seções

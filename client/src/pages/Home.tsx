@@ -3,10 +3,19 @@ import { Button } from "@/components/ui/button";
 import { APP_LOGO, APP_TITLE, getLoginUrl } from "@/const";
 import { Sparkles, MessageCircle, Zap, Heart, Check, Star, TrendingUp } from "lucide-react";
 import { useLocation } from "wouter";
+import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
 export default function Home() {
   const { isAuthenticated } = useAuth();
   const [, setLocation] = useLocation();
+  
+  // Refs for scroll animations
+  const heroRef = useScrollAnimation<HTMLDivElement>();
+  const statsRef = useScrollAnimation<HTMLDivElement>();
+  const howItWorksRef = useScrollAnimation<HTMLDivElement>();
+  const whyChooseRef = useScrollAnimation<HTMLDivElement>();
+  const testimonialsRef = useScrollAnimation<HTMLDivElement>();
+  const ctaRef = useScrollAnimation<HTMLDivElement>();
 
   const handleGetStarted = () => {
     if (isAuthenticated) {
@@ -45,7 +54,7 @@ export default function Home() {
 
       {/* Hero Section com Chat Demo */}
       <main className="container max-w-7xl mx-auto px-4 py-12">
-        <div className="grid lg:grid-cols-2 gap-12 items-center mb-20">
+        <div ref={heroRef} className="scroll-animate grid lg:grid-cols-2 gap-12 items-center mb-20">
           {/* Left: Headline + CTA */}
           <div className="text-white">
             <div className="inline-block bg-white/20 backdrop-blur-sm rounded-full px-4 py-2 mb-6">
@@ -134,7 +143,7 @@ export default function Home() {
         </div>
 
         {/* Social Proof */}
-        <div className="bg-white/10 backdrop-blur-md rounded-3xl p-8 mb-20 border border-white/20">
+        <div ref={statsRef} className="scroll-animate bg-white/10 backdrop-blur-md rounded-3xl p-8 mb-20 border border-white/20">
           <div className="grid md:grid-cols-3 gap-8 text-center text-white">
             <div>
               <div className="text-5xl font-black mb-2">10.000+</div>
@@ -155,7 +164,7 @@ export default function Home() {
         </div>
 
         {/* Como Funciona */}
-        <div className="mb-20">
+        <div ref={howItWorksRef} className="scroll-animate mb-20">
           <h2 className="text-5xl font-black text-white text-center mb-12 drop-shadow-xl">
             Como Funciona?
           </h2>
@@ -193,7 +202,7 @@ export default function Home() {
         </div>
 
         {/* Features com Imagens */}
-        <div className="mb-20">
+        <div ref={whyChooseRef} className="scroll-animate mb-20">
           <h2 className="text-5xl font-black text-white text-center mb-12 drop-shadow-xl">
             Por Que Escolher o Flerte Chat?
           </h2>
@@ -270,7 +279,7 @@ export default function Home() {
         </div>
 
         {/* Depoimentos */}
-        <div className="mb-20">
+        <div ref={testimonialsRef} className="scroll-animate mb-20">
           <h2 className="text-5xl font-black text-white text-center mb-12 drop-shadow-xl">
             O Que Nossos Usuários Dizem
           </h2>
@@ -341,7 +350,7 @@ export default function Home() {
         </div>
 
         {/* CTA Final */}
-        <div className="text-center bg-white/10 backdrop-blur-md rounded-3xl p-16 border-2 border-white/30 shadow-2xl">
+        <div ref={ctaRef} className="scroll-animate text-center bg-white/10 backdrop-blur-md rounded-3xl p-16 border-2 border-white/30 shadow-2xl">
           <h2 className="text-5xl font-black text-white mb-6 drop-shadow-xl">
             Pronto para Impressionar?
           </h2>
