@@ -40,8 +40,8 @@ export const SUBSCRIPTION_PLANS: Record<string, SubscriptionPlan> = {
     description: "Para uso regular",
     priceWeekly: 990, // R$ 9,90
     priceMonthly: 2990, // R$ 29,90
-    stripePriceIdWeekly: "price_pro_weekly", // Replace with actual Stripe Price ID
-    stripePriceIdMonthly: "price_pro_monthly", // Replace with actual Stripe Price ID
+    stripePriceIdWeekly: "price_1SUDL5GYEWk0KjWQPBVgRk5A",
+    stripePriceIdMonthly: "price_1SUDLbGYEWk0KjWQUYJqOuR3",
     features: [
       "50 mensagens/semana ou 200/mês",
       "Histórico ilimitado",
@@ -56,8 +56,8 @@ export const SUBSCRIPTION_PLANS: Record<string, SubscriptionPlan> = {
     description: "Para uso intenso",
     priceWeekly: 1990, // R$ 19,90
     priceMonthly: 5990, // R$ 59,90
-    stripePriceIdWeekly: "price_premium_weekly", // Replace with actual Stripe Price ID
-    stripePriceIdMonthly: "price_premium_monthly", // Replace with actual Stripe Price ID
+    stripePriceIdWeekly: "price_1SUDLzGYEWk0KjWQWXZuCKv0",
+    stripePriceIdMonthly: "price_1SUDMMGYEWk0KjWQc0iOPAfh",
     features: [
       "Mensagens ilimitadas",
       "Prioridade na geração",

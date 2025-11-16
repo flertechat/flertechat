@@ -78,3 +78,10 @@
 - [x] Substituir logo emoji pela chama colorida moderna
 - [x] Atualizar favicon do navegador
 - [x] Melhorar tipografia do nome FlerteChat
+
+## Integração Stripe com IDs Reais
+- [x] Criar produtos no Stripe Dashboard
+- [x] Gerar logos para cada plano
+- [x] Atualizar IDs dos preços no shared/products.ts
+- [ ] Testar fluxo de checkout e pagamento
+- [ ] Testar webhook de confirmação de pagamento
