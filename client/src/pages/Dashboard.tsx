@@ -182,9 +182,9 @@ export default function Dashboard() {
       <header className="bg-white/80 backdrop-blur-md border-b border-gray-200 sticky top-0 z-50 shadow-sm">
         <div className="container max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <span className="text-3xl">{APP_LOGO}</span>
+            <img src={APP_LOGO} alt="Logo" className="w-8 h-8 object-contain" />
             <div>
-              <span className="font-bold text-xl text-gray-800 block">{APP_TITLE}</span>
+              <span className="font-bold text-xl text-gray-800 block app-title">{APP_TITLE}</span>
               <span className="text-xs text-gray-500 italic">"Sua arma secreta para quebrar o gelo"</span>
             </div>
           </div>
@@ -218,7 +218,7 @@ export default function Dashboard() {
         {messages.length === 0 && (
           <div className="flex-1 flex flex-col items-center justify-center text-center px-4">
             <div className="mb-8">
-              <div className="text-6xl mb-4 animate-pulse">{APP_LOGO}</div>
+              <img src={APP_LOGO} alt="Logo" className="w-24 h-24 object-contain mb-4 animate-pulse" />
               <h1 className="text-4xl font-black text-gray-800 mb-4">
                 Nunca Mais Fique Sem Resposta
               </h1>
@@ -463,8 +463,8 @@ export default function Dashboard() {
             {/* Company Info */}
             <div>
               <div className="flex items-center gap-2 mb-4">
-                <span className="text-3xl">{APP_LOGO}</span>
-                <span className="font-bold text-xl">{APP_TITLE}</span>
+                <img src={APP_LOGO} alt="Logo" className="w-8 h-8 object-contain" />
+                <span className="font-bold text-xl app-title">{APP_TITLE}</span>
               </div>
               <p className="text-gray-400 text-sm italic mb-4">
                 "Sua arma secreta para quebrar o gelo"

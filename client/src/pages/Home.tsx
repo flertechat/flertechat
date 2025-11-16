@@ -22,8 +22,8 @@ export default function Home() {
       <header className="bg-black/30 backdrop-blur-md border-b border-white/20 sticky top-0 z-50">
         <div className="container max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <span className="text-4xl animate-pulse">{APP_LOGO}</span>
-            <span className="font-bold text-2xl text-white drop-shadow-lg">{APP_TITLE}</span>
+            <img src={APP_LOGO} alt="Logo" className="w-10 h-10 object-contain animate-pulse" />
+            <span className="font-bold text-2xl text-white drop-shadow-lg app-title">{APP_TITLE}</span>
           </div>
           <div className="flex items-center gap-4">
             <Button

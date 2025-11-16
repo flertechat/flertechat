@@ -73,3 +73,8 @@
 - [x] Criar página de FAQ (Perguntas Frequentes)
 - [x] Adicionar link para rolar até avaliações
 - [x] Implementar envio de email de contato
+
+## Branding e Visual
+- [x] Substituir logo emoji pela chama colorida moderna
+- [x] Atualizar favicon do navegador
+- [x] Melhorar tipografia do nome FlerteChat

@@ -88,8 +88,8 @@ export default function Plans() {
               Voltar
             </Button>
             <div className="flex items-center gap-3">
-              <span className="text-4xl animate-pulse">{APP_LOGO}</span>
-              <span className="font-bold text-2xl text-white drop-shadow-lg">{APP_TITLE}</span>
+              <img src={APP_LOGO} alt="Logo" className="w-10 h-10 object-contain animate-pulse" />
+              <span className="font-bold text-2xl text-white drop-shadow-lg app-title">{APP_TITLE}</span>
             </div>
           </div>
           {isAuthenticated && user && (
