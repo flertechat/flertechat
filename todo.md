@@ -85,3 +85,6 @@
 - [x] Atualizar IDs dos preços no shared/products.ts
 - [ ] Testar fluxo de checkout e pagamento
 - [ ] Testar webhook de confirmação de pagamento
+
+## UX Improvements
+- [x] Adicionar smooth scroll fluido em todo o site
